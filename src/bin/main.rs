@@ -37,13 +37,10 @@ async fn main(spawner: Spawner) {
 
     // TODO: Spawn some tasks
     let _ = spawner;
-    let mut counter = 0;
 
     loop {
-        // info!("Hello world!");
-        info!("{}", counter);
-        counter += 1;
-        // Timer::after(Duration::from_secs(1)).await;
+        info!("Hello world!");
+        Timer::after(Duration::from_secs(1)).await;
     }
 
     // for inspiration have a look at the examples at https://github.com/esp-rs/esp-hal/tree/esp-hal-v1.0.0-beta.0/examples/src/bin
