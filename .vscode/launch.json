@@ -9,9 +9,6 @@
             "chip": "esp32c6",
             "probe": "303a:1001:F0:F5:BD:28:6E:C4",
             "runtimeExecutable": "probe-rs",
-            "runtimeArgs": [
-                "dap-server"
-            ],
             "flashingConfig": {
                 "flashingEnabled": true,
                 "haltAfterReset": false,
@@ -37,9 +34,11 @@
                     ],
                     "programBinary": "target/riscv32imac-unknown-none-elf/debug/vr-tracker",
                     "svdFile": "${workspaceFolder}/esp32c6.svd",
+
                 }
             ],
-            "consoleLogLevel": "Console",
+            
+            "consoleLogLevel": "Debug",
         }
     ]
 }

@@ -1,5 +1,5 @@
 [target.riscv32imac-unknown-none-elf]
-runner = "probe-rs run --chip=esp32c6 --always-print-stacktrace --no-location --catch-hardfault"
+runner = "probe-rs run --chip=esp32c6"
 
 [env]
 MCU="esp32c6"
@@ -16,3 +16,12 @@ target = "riscv32imac-unknown-none-elf"
 
 [unstable]
 build-std = ["alloc", "core"]
+
+[profile.dev]
+debug = true
+opt-level = 0
+runner = "probe-rs run --chip=esp32c6"
+
+[profile.release]
+debug = true
+opt-level = 1
