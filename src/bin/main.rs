@@ -1,6 +1,10 @@
 #![no_std]
 #![no_main]
 
+use core::cell::RefCell;
+
+use critical_section::Mutex;
+use esp_hal::assist_debug::DebugAssist;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_time::{Duration, Timer};
@@ -10,6 +14,8 @@ use esp_hal::timer::timg::TimerGroup;
 use panic_rtt_target as _;
 
 extern crate alloc;
+
+static DA: Mutex<RefCell<Option<DebugAssist>>> = Mutex::new(RefCell::new(None));
 
 #[esp_hal_embassy::main]
 async fn main(spawner: Spawner) {

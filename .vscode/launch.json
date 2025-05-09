@@ -4,42 +4,42 @@
         {
             "type": "probe-rs-debug",
             "request": "launch",
-            "name": "Launch",
+            "name": "Debug with probe-rs",
             "cwd": "${workspaceFolder}",
-            "chip": "esp32c6", //!MODIFY
-            // probe field only needed if multiple probes connected. <Serial> is the MAC address of your esp in case of usb-jtag       
-            "probe": "VID:PID:f0:f5:bd:28:6e:c4", //!MODIFY (or remove) | optional field
+            "chip": "esp32c6",
+            "probe": "303a:1001:F0:F5:BD:28:6E:C4",
+            "runtimeExecutable": "probe-rs",
+            "runtimeArgs": [
+                "dap-server"
+            ],
             "flashingConfig": {
                 "flashingEnabled": true,
-                "haltAfterReset": true,
+                "haltAfterReset": false,
                 "formatOptions": {
-                    "binaryFormat": "idf"
+                    //!MODIFY (or remove). Valid values are: 'bin', 'hex', 'elf'(default), 'idf'
+                    "binaryFormat": "elf"
                 }
             },
             "coreConfigs": [
                 {
                     "coreIndex": 0,
-                    "programBinary": "target/riscv32imac-unknown-none-elf/debug/${workspaceFolderBasename}", //!MODIFY
-                    // svdFiles describe the hardware register names off the esp peripherals, such as the LEDC peripheral. 
-                    // They can be downloaded seperatly @ https://github.com/espressif/svd/tree/main/svd
-                    "svdFile": "${workspaceFolder}/esp32c6.svd" //!MODIFY (or remove) | optional field
+                    "rttEnabled": true,
+                    "rttChannelFormats": [
+                        {
+                            "channelNumber": 0,
+                            "dataFormat": "String",
+                            "showTimestamps": true,
+                        },
+                        {
+                            "channelNumber": 1,
+                            "dataFormat": "BinaryLE"
+                        }
+                    ],
+                    "programBinary": "target/riscv32imac-unknown-none-elf/debug/vr-tracker",
+                    "svdFile": "${workspaceFolder}/esp32c6.svd",
                 }
-            ]
-        },
-        {
-            "type": "probe-rs-debug",
-            "request": "attach",
-            "name": "Attach",
-            "cwd": "${workspaceFolder}",
-            "chip": "esp32c6", //!MODIFY       
-            "probe": "VID:PID:f0:f5:bd:28:6e:c4", //!MODIFY (or remove) | optional field
-            "coreConfigs": [
-                {
-                    "coreIndex": 0,
-                    "programBinary": "target/riscv32imac-unknown-none-elf/debug/${workspaceFolderBasename}", //!MODIFY
-                    "svdFile": "${workspaceFolder}/esp32c6.svd" //!MODIFY (or remove) | optional field
-                }
-            ]
+            ],
+            "consoleLogLevel": "Console",
         }
     ]
 }

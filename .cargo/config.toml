@@ -2,6 +2,7 @@
 runner = "probe-rs run --chip=esp32c6 --always-print-stacktrace --no-location --catch-hardfault"
 
 [env]
+MCU="esp32c6"
 DEFMT_LOG="info"
 
 [build]
