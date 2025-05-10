@@ -1,44 +1,27 @@
 {
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "probe-rs-debug",
-            "request": "launch",
-            "name": "Debug with probe-rs",
-            "cwd": "${workspaceFolder}",
-            "chip": "esp32c6",
-            "probe": "303a:1001:F0:F5:BD:28:6E:C4",
-            "runtimeExecutable": "probe-rs",
-            "flashingConfig": {
-                "flashingEnabled": true,
-                "haltAfterReset": false,
-                "formatOptions": {
-                    //!MODIFY (or remove). Valid values are: 'bin', 'hex', 'elf'(default), 'idf'
-                    "binaryFormat": "elf"
-                }
-            },
-            "coreConfigs": [
-                {
-                    "coreIndex": 0,
-                    "rttEnabled": true,
-                    "rttChannelFormats": [
-                        {
-                            "channelNumber": 0,
-                            "dataFormat": "String",
-                            "showTimestamps": true,
-                        },
-                        {
-                            "channelNumber": 1,
-                            "dataFormat": "BinaryLE"
-                        }
-                    ],
-                    "programBinary": "target/riscv32imac-unknown-none-elf/debug/vr-tracker",
-                    "svdFile": "${workspaceFolder}/esp32c6.svd",
-
-                }
-            ],
-            
-            "consoleLogLevel": "Debug",
-        }
+       {
+        "type": "probe-rs-debug",
+        "request": "launch",
+        "name": "probe-rs Test",
+        "cwd": "${workspaceFolder}",
+        "connectUnderReset": false,
+        "chip": "esp32c6",
+        "flashingConfig": {
+            "flashingEnabled": true,
+            "haltAfterReset": true
+        },
+        "probe": "303a:1001:F0:F5:BD:27:56:CC",
+        "coreConfigs": [
+            {
+                "coreIndex": 0,
+                "programBinary": "${workspaceFolder}/target/riscv32imac-unknown-none-elf/debug/${workspaceFolderBasename}",
+            }
+        ]
+       }
     ]
 }
