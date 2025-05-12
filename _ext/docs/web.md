@@ -36,3 +36,7 @@
 
 
 https://probe.rs/docs/tools/debugger/
+
+
+# software i2c (try to have 8 I2C sync for latency)
+https://en.wikipedia.org/wiki/Bit_banging
