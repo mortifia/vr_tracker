@@ -34,47 +34,11 @@ async fn main(spawner: Spawner) {
     let timer0 = SystemTimer::new(peripherals.SYSTIMER);
     esp_hal_embassy::init(timer0.alarm0);
 
-    // Set GPIO0 as an output, and set its state high initially.
-    // let config_output = OutputConfig::default();
-    // let freq = Rate::from_mhz(80);
-    // let rmt = Rmt::new(peripherals.RMT, freq).unwrap();
-    // let rmt_buffer = smartLedBuffer!(1);
-    // let mut led = SmartLedsAdapter::new(rmt.channel0, peripherals.GPIO8, rmt_buffer);
-    // let mut led = Output::new(peripherals.GPIO8, Level::High, config_output);
-
     info!("Embassy initialized!");
 
-    // TODO: Spawn some tasks
-    // let _ = spawner;
-
+    //Spawn some tasks
     spawner.spawn(hello_world()).unwrap();
     spawner.spawn(rainbow(peripherals.RMT, peripherals.GPIO8.into())).unwrap();
-
-    // let mut color = Hsv {
-    //     hue: 0,
-    //     sat: 255,
-    //     val: 255,
-    // };
-    // let mut data;
-    // loop {
-    //     // info!("Hello world!");
-    //     // led.toggle();
-    //     // Timer::after(Duration::from_secs(1)).await;
-    //     // for hue in 0..=255 {
-    //     //     color.hue = hue;
-    //     //     // Convert from the HSV color space (where we can easily transition from one
-    //     //     // color to the other) to the RGB color space that we can then send to the LED
-    //     //     data = [hsv2rgb(color)];
-    //     //     // When sending to the LED, we do a gamma correction first (see smart_leds
-    //     //     // documentation for details) and then limit the brightness to 10 out of 255 so
-    //     //     // that the output it's not too bright.
-    //     //     led.write(brightness(gamma(data.iter().cloned()), 8))
-    //     //         .unwrap();
-    //     //     delay.delay_millis(10);
-    //     // }
-    // }
-
-    // for inspiration have a look at the examples at https://github.com/esp-rs/esp-hal/tree/esp-hal-v1.0.0-beta.0/examples/src/bin
 }
 
 #[embassy_executor::task]
@@ -89,20 +53,18 @@ async fn hello_world() {
 
 #[embassy_executor::task]
 async fn rainbow(rmt: esp_hal::peripherals::RMT, gpio: esp_hal::gpio::AnyPin) {
-    // let delay = Delay::new();
-
-
-    // let config_output = OutputConfig::default();
     let freq = Rate::from_mhz(80);
+
     let rmt = Rmt::new(rmt, freq).unwrap();
     let rmt_buffer = smartLedBuffer!(1);
-    let mut led = SmartLedsAdapter::new(rmt.channel0, gpio, rmt_buffer);
 
+    let mut led = SmartLedsAdapter::new(rmt.channel0, gpio, rmt_buffer);
     let mut color = Hsv {
         hue: 0,
         sat: 255,
         val: 255,
     };
+    
     let mut data;
     loop {
         for hue in 0..=255 {
